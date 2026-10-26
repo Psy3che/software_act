@@ -1,4 +1,5 @@
 site_name: Ticket Flash Sale System Docs
+
 theme:
   name: material
   palette:
@@ -8,8 +9,17 @@ theme:
     - search.highlight
     - navigation.sections
 
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_javascript:
+  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+
 nav:
-  - Requirements:
-      - SRS Overview: software_requirements_specification.md
-  - Decision Records:
-      - ADR-0001: ADR-0001-architectural-pattern-selection.md
+  - Home: index.md
+  - Requirements (SRS): software_requirements_specification.md
+  - Architecture Decision (ADR): ADR-0001-architectural-pattern-selection.md
