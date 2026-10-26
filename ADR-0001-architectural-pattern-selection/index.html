@@ -1,0 +1,1394 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../software_requirements_specification/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Architecture Decision (ADR) - Ticket Flash Sale System Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-0001-architecture-pattern-selection-for-online-ticket-flash-sale-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Ticket Flash Sale System Docs" class="md-header__button md-logo" aria-label="Ticket Flash Sale System Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ticket Flash Sale System Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture Decision (ADR)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Ticket Flash Sale System Docs" class="md-nav__button md-logo" aria-label="Ticket Flash Sale System Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Ticket Flash Sale System Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software_requirements_specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requirements (SRS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Decision (ADR)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Decision (ADR)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#y-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Y-Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#considered-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Considered Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Considered Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-monolithic-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 1: Monolithic Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 1: Monolithic Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-traditional-layered-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 2: Traditional Layered Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 2: Traditional Layered Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-full-microservices-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 3: Full Microservices Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 3: Full Microservices Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-4-pure-event-driven-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 4: Pure Event-Driven Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 4: Pure Event-Driven Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-5-event-driven-architecture-eda-cqrs-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 5: Event-Driven Architecture (EDA) + CQRS Pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 5: Event-Driven Architecture (EDA) + CQRS Pattern">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consequences
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consequences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive Consequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Negative Consequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk Mitigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#impact-on-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact on Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-architectural-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Architectural Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#y-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Y-Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#considered-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Considered Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Considered Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-monolithic-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 1: Monolithic Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 1: Monolithic Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-traditional-layered-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 2: Traditional Layered Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 2: Traditional Layered Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-full-microservices-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 3: Full Microservices Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 3: Full Microservices Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-4-pure-event-driven-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 4: Pure Event-Driven Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 4: Pure Event-Driven Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-5-event-driven-architecture-eda-cqrs-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 5: Event-Driven Architecture (EDA) + CQRS Pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 5: Event-Driven Architecture (EDA) + CQRS Pattern">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advantages_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consequences
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consequences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive Consequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Negative Consequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk Mitigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#impact-on-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact on Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-architectural-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Architectural Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="adr-0001-architecture-pattern-selection-for-online-ticket-flash-sale-system">ADR-0001: Architecture Pattern Selection for Online Ticket Flash Sale System</h1>
+<h2 id="context">Context</h2>
+<p>The Online Ticket Flash Sale System is a public-facing event ticketing platform used by ticket buyers, venue administrators, system operators, and event organizers. The system must support event browsing, real-time ticket inventory queries, flash-sale order placement, payment integration, order lifecycle management, automated unpaid stock releases, system monitoring, and audit logging.</p>
+<p>The system has several architecturally significant requirements:
+- It must handle extreme traffic spikes (high QPS/TPS) during ticket sale ignition and deadlines;
+- It must remain highly available during active ticket sale periods;
+- It must enforce absolute zero over-selling (No Over-selling) to maintain data consistency under massive concurrency;
+- It must protect sensitive user authentication, payment, and transaction data;
+- It must keep all purchase attempts, order states, and administrative actions auditable;
+- It must integrate reliably with third-party payment gateways;
+- It must provide rapid, low-latency responses (under 50 ms for request ingestion) without locking persistent storage;
+- It must support dynamic flash-sale events with varying seat rules, quota limits, and pricing structures.</p>
+<p>A single architectural style must therefore balance extreme scalability, low latency, maintainability, reliability, security, auditability, and implementation complexity.</p>
+<h2 id="decision">Decision</h2>
+<p>We will use Event-Driven Architecture (EDA) as the Primary Architectural Paradigm, combined with CQRS (Command Query Responsibility Segregation) for Read/Write Path Separation.</p>
+<p>The system will be divided into clear components based on business capabilities. User-facing query workflows will use synchronous API and caching communication when an immediate response is required. Background order processing and stock mutations will use asynchronous event-driven communication.</p>
+<p>Main system components include:
+- Client Web/Mobile Application;
+- API Gateway &amp; Dynamic Token Validation Service;
+- User Identity &amp; Rate Limiting Service;
+- Ticket Inquiry &amp; Read-Side Cache Service (CQRS Read Path);
+- Redis Lua Pre-deduction Engine (CQRS Write Path - Producer);
+- Kafka Event Broker / Message Queue;
+- Asynchronous Order Processing Worker Cluster (EDA Consumer);
+- Relational Database (Primary-Secondary MySQL with Read/Write Splitting);
+- Delay Queue / Unpaid Order Timeout Service;
+- Notification Service (WebSocket Push);
+- Audit Logging &amp; Monitoring Service;
+- Third-Party Payment Gateway Integration.</p>
+<p>Synchronous communication will be used for actions such as user authentication, event browsing, real-time ticket availability checks (Redis cache hits), and payment gateway status synchronization.</p>
+<p>Asynchronous communication will be used for actions such as queueing purchase commands, Order Persistence, unpaid stock release timers, WebSocket status notifications, audit logging, and metric tracking.</p>
+<h2 id="y-statement">Y-Statement</h2>
+<p>In the context of building an Online Ticket Flash Sale System as a high-concurrency event ticketing platform,
+facing extreme traffic spikes, strict zero over-selling constraints, auditability requirements, third-party payment integration, and low-latency user feedback targets,
+we decided on an Event-Driven Architecture (EDA) combined with CQRS (Command Query Responsibility Segregation),
+and rejected a simple monolithic architecture, a traditional layered architecture, a full microservices architecture, and a pure event-driven architecture,
+to achieve extreme scalability, ultra-low latency, high availability, zero over-selling safety, auditability, and reliable background peak shaving,
+accepting higher system complexity than a monolith and the need to manage eventual consistency and asynchronous workflows,
+because the system needs clear separation of read/write responsibilities and scalable queueing workflows without the full operational burden and network latency overhead of complete microservices.</p>
+<h2 id="considered-options">Considered Options</h2>
+<h3 id="option-1-monolithic-architecture">Option 1: Monolithic Architecture</h3>
+<p>A monolithic architecture would place all ticket inquiry, order placement, payment processing, and audit functions into a single deployable application database unit.</p>
+<h4 id="advantages">Advantages</h4>
+<ul>
+<li>Simple initial development and local testing.</li>
+<li>Single database transaction guarantees simple immediate consistency.</li>
+<li>Lower operational complexity and deployment overhead for small-scale applications.</li>
+</ul>
+<h4 id="disadvantages">Disadvantages</h4>
+<ul>
+<li>Cannot scale ticket purchase functions independently during high-concurrency flash sale peaks.</li>
+<li>High database lock contention under simultaneous write requests leads to thread pool exhaustion and system failure.</li>
+<li>Third-party payment delays or database bottlenecks directly degrade the entire application.</li>
+<li>High risk of inventory over-selling under unhandled race conditions.</li>
+</ul>
+<h4 id="evaluation">Evaluation</h4>
+<p>A monolith is entirely unsuitable for flash-sale scenarios because synchronous database writes cannot handle extreme burst traffic spikes.</p>
+<h3 id="option-2-traditional-layered-architecture">Option 2: Traditional Layered Architecture</h3>
+<p>A layered architecture strictly organizes code vertically into Presentation Layer, Business Logic Layer, and Data Access Layer with synchronous calls.</p>
+<h4 id="advantages_1">Advantages</h4>
+<ul>
+<li>Well-known standard structure with clear separation of code concerns.</li>
+<li>Easy for development teams to organize.</li>
+</ul>
+<h4 id="disadvantages_1">Disadvantages</h4>
+<ul>
+<li>End-to-end synchronous call chains (<code>Client -&gt; Gateway -&gt; Service -&gt; Database</code>) block threads while waiting for DB IO.</li>
+<li>Thread starvation occurs immediately when thousands of requests hit the database simultaneously.</li>
+<li>Does not separate high-volume read traffic from high-concurrency write traffic.</li>
+</ul>
+<h4 id="evaluation_1">Evaluation</h4>
+<p>Layered architecture fails under flash-sale workloads because synchronous vertical execution blocks system resources during demand spikes.</p>
+<h3 id="option-3-full-microservices-architecture">Option 3: Full Microservices Architecture</h3>
+<p>A full microservices architecture splits each business capability into an independently deployable service, each managing its own isolated database.</p>
+<h4 id="advantages_2">Advantages</h4>
+<ul>
+<li>Independent scalability and deployment for each business service.</li>
+<li>Clear domain ownership across large engineering teams.</li>
+</ul>
+<h4 id="disadvantages_2">Disadvantages</h4>
+<ul>
+<li>High operational complexity requiring Kubernetes, service meshes, and complex CI/CD pipelines.</li>
+<li>Distributed transactions (e.g., SAGA/TCC) across microservice databases introduce latency and implementation risk.</li>
+<li>Increased network hop latency is undesirable for sub-50ms flash sale responses.</li>
+</ul>
+<h4 id="evaluation_2">Evaluation</h4>
+<p>Full microservices introduce excessive operational burden and distributed transaction complexity without solving the fundamental high-concurrency database peak-shaving problem.</p>
+<h3 id="option-4-pure-event-driven-architecture">Option 4: Pure Event-Driven Architecture</h3>
+<p>A pure event-driven architecture makes every interaction, including ticket browsing and login, asynchronous via event buses.</p>
+<h4 id="advantages_3">Advantages</h4>
+<ul>
+<li>Maximum decoupling and asynchronous execution.</li>
+<li>Excellent for background execution, audit logging, and audit history.</li>
+</ul>
+<h4 id="disadvantages_3">Disadvantages</h4>
+<ul>
+<li>Poor user experience for synchronous actions (e.g., browsing tickets or logging in).</li>
+<li>Higher complexity for user-facing request-response workflows.</li>
+<li>Difficult to guarantee immediate read consistency where expected.</li>
+</ul>
+<h4 id="evaluation_3">Evaluation</h4>
+<p>Pure event-driven models are unsuitable because ticket queries require immediate synchronous responses via cache.</p>
+<h3 id="option-5-event-driven-architecture-eda-cqrs-pattern">Option 5: Event-Driven Architecture (EDA) + CQRS Pattern</h3>
+<p>This option separates the system into a high-throughput CQRS Read Path (Redis cache) and an EDA Write Path (Redis Lua pre-deduction + Kafka queue + asynchronous workers).</p>
+<h4 id="advantages_4">Advantages</h4>
+<ul>
+<li><strong>CQRS Read Path</strong>: 99% of ticket browsing hits Redis/CDN directly, achieving $100,000+\text{ QPS}$ without touching the relational database.</li>
+<li><strong>EDA Write Path</strong>: Flash-sale purchase commands are ingested in memory via Lua scripts and pushed to Kafka in $&lt;50\text{ ms}$, shaving traffic peaks.</li>
+<li><strong>Zero Over-selling Guarantee</strong>: Redis Lua scripts ensure atomic stock deduction; Kafka sequential partition consumption prevents database race conditions.</li>
+<li><strong>Fault Isolation</strong>: Database slowness does not block request ingestion in Kafka.</li>
+</ul>
+<h4 id="disadvantages_4">Disadvantages</h4>
+<ul>
+<li>Requires managing eventual consistency between queue completion and user UI updates.</li>
+<li>Higher complexity than a monolith, requiring event handling, retries, and dead-letter queues.</li>
+</ul>
+<h4 id="evaluation_4">Evaluation</h4>
+<p>This hybrid option provides the optimal architecture for flash sale systems, balancing high throughput, low latency, data safety, and peak shaving.</p>
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive-consequences">Positive Consequences</h3>
+<ul>
+<li>Flash-sale purchase endpoints ingest massive traffic spikes asynchronously without crashing persistent databases.</li>
+<li>Read operations scale independently using Redis cache clusters.</li>
+<li>Zero over-selling is guaranteed through atomic memory operations and queued processing.</li>
+<li>WebSocket pushes notify users asynchronously once workers complete order persistence.</li>
+<li>Unpaid orders are automatically released back to stock using delay queues after 15 minutes.</li>
+<li>Audit logging is reliably triggered by events without blocking core purchasing logic.</li>
+</ul>
+<h3 id="negative-consequences">Negative Consequences</h3>
+<ul>
+<li>System architecture is more complex than a standard monolithic application.</li>
+<li>Developers must manage eventual consistency and asynchronous messaging logic.</li>
+<li>Requires infrastructure monitoring for Kafka queue backlogs and Redis memory usage.</li>
+</ul>
+<h3 id="risk-mitigation">Risk Mitigation</h3>
+<ul>
+<li>Use Redis Lua scripts for atomic stock validation and deduction.</li>
+<li>Implement database unique composite indexes (<code>User_ID + Activity_ID</code>) to guarantee consumer idempotency.</li>
+<li>Implement dead-letter queues (DLQ) and retry mechanisms for failed order events.</li>
+<li>Deploy WebSocket fallback polling for client queue notification redundancy.</li>
+</ul>
+<h2 id="impact-on-architecture">Impact on Architecture</h2>
+<p>This decision determines the core container and component decomposition:
+- Client UI Layer (Web/Mobile);
+- API Gateway &amp; Rate Limiting Container;
+- CQRS Read Cache Container (Redis Cluster);
+- Flash Sale Command Producer Container (Lua Script Execution);
+- Message Broker Container (Apache Kafka);
+- Asynchronous Worker Consumer Cluster;
+- Persistence Database (MySQL Primary-Secondary);
+- Unpaid Order Delay Queue Container;
+- Notification Container (WebSocket);
+- Audit Log Storage.</p>
+<h2 id="related-requirements">Related Requirements</h2>
+<ul>
+<li><strong>FR-1.3</strong>: IP and User Rate Limiting</li>
+<li><strong>FR-2.1</strong>: CQRS Multilevel Inventory Caching</li>
+<li><strong>FR-3.1</strong>: Redis Lua Atomic Stock Pre-deduction</li>
+<li><strong>FR-3.2</strong>: EDA Kafka Event Publication and Queueing</li>
+<li><strong>FR-3.5</strong>: Idempotent Order Persistence and Zero Over-selling</li>
+<li><strong>FR-4.3</strong>: Asynchronous Unpaid Order Stock Recovery</li>
+<li><strong>NFR-PER-1</strong>: $100,000\text{ QPS}$ Read / $50,000\text{ TPS}$ Write Performance Targets</li>
+<li><strong>NFR-PER-2</strong>: Sub-50ms Response Latency for Purchase Ingestion</li>
+</ul>
+<h2 id="related-architectural-characteristics">Related Architectural Characteristics</h2>
+<ul>
+<li>Scalability</li>
+<li>Availability</li>
+<li>Performance &amp; Low Latency</li>
+<li>Data Consistency &amp; Safety</li>
+<li>Auditability</li>
+<li>Fault Tolerance &amp; Peak Shaving</li>
+<li>Maintainability</li>
+</ul>
+<h2 id="final-decision">Final Decision</h2>
+<p>The selected architectural style is <strong>Event-Driven Architecture (EDA) with CQRS Pattern</strong>.
+This architecture is appropriate for the Online Ticket Flash Sale System because it fulfills all key requirements of a high-concurrency ticketing platform: extreme peak shaving, low-latency ingestion, strict zero over-selling, isolated read/write scaling, and reliable background order persistence.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["search.suggest", "search.highlight", "navigation.sections"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
