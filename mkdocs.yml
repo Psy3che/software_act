@@ -1,0 +1,15 @@
+site_name: Ticket Flash Sale System Docs
+theme:
+  name: material
+  palette:
+    scheme: slate
+  features:
+    - search.suggest
+    - search.highlight
+    - navigation.sections
+
+nav:
+  - Requirements:
+      - SRS Overview: software_requirements_specification.md
+  - Decision Records:
+      - ADR-0001: ADR-0001-architectural-pattern-selection.md
