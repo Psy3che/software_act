@@ -49,7 +49,7 @@ University of Debrecen
 
 | Name    | Date       | Reason For Changes                               | Version |
 | ------- | ---------- | ------------------------------------------------ | ------- |
-| Student | 2026-10-26 | Initial English draft based on IEEE 830 standard | 0.1     |
+| Tangtang Yang | 2026-10-26 | Initial English draft based on IEEE 830 standard | 1.0  |
 
 ## 1. Introduction
 
